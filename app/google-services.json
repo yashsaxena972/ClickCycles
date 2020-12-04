@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "282475441138",
+    "firebase_url": "https://cycle-lock.firebaseio.com",
+    "project_id": "cycle-lock",
+    "storage_bucket": "cycle-lock.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:282475441138:android:9a7b71f63a901df4add96b",
+        "android_client_info": {
+          "package_name": "com.example.clickcycles"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "282475441138-t9ms1a4n7lpbnlldbjjrff0jhtesb3c7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.clickcycles",
+            "certificate_hash": "88c50a5bd9c3630b9a7842757a17f4689fe9c438"
+          }
+        },
+        {
+          "client_id": "282475441138-h74t6e7k7b6o87bee316fdui50o9rd08.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0A3ulz2rzlOonSm3TqCNzkkGTN1IyS0A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "282475441138-h74t6e7k7b6o87bee316fdui50o9rd08.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
