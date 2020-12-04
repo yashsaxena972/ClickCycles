@@ -52,6 +52,7 @@ public class MapActivity<mRollNumber> extends FragmentActivity implements OnMapR
     private GoogleMap mMap;
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
+    Location mOrigin, mDestination;
     LocationRequest mLocationRequest;
     private Marker mDriverMarker;
 
@@ -63,6 +64,7 @@ public class MapActivity<mRollNumber> extends FragmentActivity implements OnMapR
     private TextView nameTextView;
     private TextView idTextView;
     private TextView statusTextView;
+    private TextView rideInfoTextView;
     private ImageButton interactionButton;
     private ImageButton menuImageButton;
     private DrawerLayout mDrawerLayout;
@@ -82,6 +84,7 @@ public class MapActivity<mRollNumber> extends FragmentActivity implements OnMapR
         profilePhoto = (ImageView)findViewById(R.id.profile_photo);
         nameTextView = (TextView)findViewById(R.id.name_text_view);
         idTextView = (TextView)findViewById(R.id.id_text_view);
+        rideInfoTextView = (TextView)findViewById(R.id.ride_info_text_view);
         statusTextView = (TextView)findViewById(R.id.ride_status_text_view);
         menuImageButton = (ImageButton)findViewById(R.id.menu_image_button);
         interactionButton = (ImageButton) findViewById(R.id.interaction_button);
@@ -105,13 +108,14 @@ public class MapActivity<mRollNumber> extends FragmentActivity implements OnMapR
                         if (snapshot.exists() && snapshot.getChildrenCount() > 0) {
                             Map<String, Object> map = (Map<String, Object>) snapshot.getValue();
 
-                            if (map.get("RollNo:") != null) {
-                                mRequestRollNumber = map.get("RollNo:").toString();
+                            if (map.get("RollNo") != null) {
+                                mRequestRollNumber = map.get("RollNo").toString();
 
 
                                 if (mRequestRollNumber.equals(mRollNumber)) {
                                     statusTextView.setText("Ride in progress");
                                     statusTextView.setTextColor(Color.parseColor("#2E7D32"));
+                                    mOrigin = mLastLocation;
                                 }
                             }
                         }
@@ -122,9 +126,9 @@ public class MapActivity<mRollNumber> extends FragmentActivity implements OnMapR
                         if (snapshot.exists() && snapshot.getChildrenCount() > 0) {
                             Map<String, Object> map = (Map<String, Object>) snapshot.getValue();
 
-                            if (map.get("RollNo:") != null) {
-                                mRequestRollNumber = map.get("RollNo:").toString();
-                                if (mRequestRollNumber == mRollNumber) {
+                            if (map.get("RollNo") != null) {
+                                mRequestRollNumber = map.get("RollNo").toString();
+                                if (mRequestRollNumber.equals(mRollNumber)) {
                                     statusTextView.setText("Ride in progress");
                                     statusTextView.setTextColor(Color.parseColor("#2E7D32"));
                                 }
@@ -137,12 +141,14 @@ public class MapActivity<mRollNumber> extends FragmentActivity implements OnMapR
                         if (snapshot.exists() && snapshot.getChildrenCount() > 0) {
                             Map<String, Object> map = (Map<String, Object>) snapshot.getValue();
 
-                            if (map.get("RollNo:") != null) {
-                                mRequestRollNumber = map.get("RollNo:").toString();
+                            if (map.get("RollNo") != null) {
+                                mRequestRollNumber = map.get("RollNo").toString();
 
-                                if (mRequestRollNumber.equals("101703627")) {
+                                if (mRequestRollNumber.equals(mRollNumber)) {
                                     statusTextView.setText("Ride ended");
                                     statusTextView.setTextColor(Color.parseColor("#E53935"));
+                                    mDestination = mLastLocation;
+                                    generateRideInfo();
                                 }
                             }
                         }
@@ -203,6 +209,13 @@ public class MapActivity<mRollNumber> extends FragmentActivity implements OnMapR
                 return true;
             }
         });
+    }
+
+    private void generateRideInfo() {
+        int distance = (int) mOrigin.distanceTo(mDestination);
+        rideInfoTextView.setText("Distance travelled\n"+String.valueOf(distance)+"m");
+        interactionButton.setVisibility(View.GONE);
+        rideInfoTextView.setVisibility(View.VISIBLE);
     }
 
     private void getUserInfo() {
